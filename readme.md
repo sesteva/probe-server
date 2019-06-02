@@ -12,7 +12,13 @@ $ npm i -D @sesteva/probe-server
 $ yarn add -D @sesteva/probe-server
 ```
 
+## Requirements
+
+The module expects PROBE_PORT to be an ENV variable. Otherwise it defaults to port 9000
+
 ## Usage with Express
+
+You can see a full example in the "example" folder on this repo.
 
 ```js
 const probes = require("@sesteva/probe-server");
@@ -31,12 +37,14 @@ const probeServer = probes(Prometheus);
 server.listen(port, err => {
 	probeServer.signalReady();
 	if (err) throw err;
-	console.log(`> Ready on http://localhost:${port}`);
+	console.info(`> Ready on http://localhost:${port}`);
 });
 ```
 
-## API
+## Credits
+
+Insipired by [Lightship](https://github.com/gajus/lightship)
 
 ## License
 
-MIT © [<%= name %>](https://github.com/<%= githubUsername %>)
+MIT © [sesteva](https://github.com/sesteva)
