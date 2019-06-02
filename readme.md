@@ -1,46 +1,35 @@
-# <%= moduleName %> [![Build Status](https://travis-ci.com/<%= githubUsername %>/<%= moduleName %>.svg?branch=master)](https://travis-ci.com/<%= githubUsername %>/<%= moduleName %>)
+# @sesteva/probe-server [![Build Status](https://travis-ci.com/sesteva/probe-server.svg?branch=master)](https://travis-ci.com/sesteva/probe-server)
 
 >
-
 
 ## Install
 
 ```
-$ npm install <%= moduleName %>
+$ npm i -D @sesteva/probe-server
 ```
 
+```
+$ yarn add -D @sesteva/probe-server
+```
 
 ## Usage
 
 ```js
-const <%= camelModuleName %> = require('<%= moduleName %>');
+const probes = require("@sesteva/probe-server");
+const Prometheus = require("prom-client");
 
-<%= camelModuleName %>('unicorns');
-//=> 'unicorns & rainbows'
+const metricsInterval = Prometheus.collectDefaultMetrics();
+const httpRequestDurationMicroseconds = new Prometheus.Histogram({
+	name: "http_request_duration_ms",
+	help: "Duration of HTTP requests in ms",
+	labelNames: ["method", "route", "code"],
+	buckets: [0.1, 5, 15, 50, 100, 200, 300, 400, 500] // buckets for response time from 0.1ms to 500ms
+});
+
+const probeServer = probes(Prometheus);
 ```
 
-
 ## API
-
-### <%= camelModuleName %>(input, [options])
-
-#### input
-
-Type: `string`
-
-Lorem ipsum.
-
-#### options
-
-Type: `object`
-
-##### foo
-
-Type: `boolean`<br>
-Default: `false`
-
-Lorem ipsum.
-
 
 ## License
 
