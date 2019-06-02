@@ -1,0 +1,30 @@
+{
+	"name": "@sesteva/probe-server",
+	"version": "0.0.0",
+	"description": "",
+	"license": "MIT",
+	"repository": "https://github.com/sesteva/probe-server",
+	"author": {
+		"name": "Santiago Esteva",
+		"email": "santiagoesteva@gmail.com",
+		"url": "https://santiagoesteva.com"
+	},
+	"engines": {
+		"node": ">=8"
+	},
+	"scripts": {
+		"test": "jest"
+	},
+	"files": [
+		"index.js"
+	],
+	"keywords": [
+		"nodejs",
+		"kubernetes",
+		"prometheus"
+	],
+	"dependencies": {},
+	"devDependencies": {
+		"jest": "^24.8.0"
+	}
+}
