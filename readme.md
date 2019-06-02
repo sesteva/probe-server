@@ -12,7 +12,7 @@ $ npm i -D @sesteva/probe-server
 $ yarn add -D @sesteva/probe-server
 ```
 
-## Usage
+## Usage with Express
 
 ```js
 const probes = require("@sesteva/probe-server");
@@ -27,6 +27,12 @@ const httpRequestDurationMicroseconds = new Prometheus.Histogram({
 });
 
 const probeServer = probes(Prometheus);
+
+server.listen(port, err => {
+	probeServer.signalReady();
+	if (err) throw err;
+	console.log(`> Ready on http://localhost:${port}`);
+});
 ```
 
 ## API
