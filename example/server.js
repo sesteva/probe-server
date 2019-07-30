@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const Prometheus = require("prom-client");
-const probes = require("../index.js");
+const probes = require("../dist/index.js");
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 
@@ -14,7 +14,7 @@ const httpRequestDurationMicroseconds = new Prometheus.Histogram({
 	buckets: [0.1, 5, 15, 50, 100, 200, 300, 400, 500] // buckets for response time from 0.1ms to 500ms
 });
 
-const probeServer = probes(Prometheus);
+const probeServer = probes("testApp", Prometheus);
 const server = express();
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
@@ -84,7 +84,7 @@ process.on("SIGTERM", () => {
 });
 
 server.listen(port, err => {
-	probeServer.signalReady();
+	probeServer.emitReady();
 	if (err) throw err;
 	console.log(`> Ready on http://localhost:${port}`);
 });
