@@ -1,4 +1,4 @@
-# @ia/probe-metrics-server [![Build Status](https://travis-ci.com/sesteva/probe-server.svg?branch=master)](https://travis-ci.com/sesteva/probe-server)
+# @flia/probe-metrics-server [![Build Status](https://travis-ci.com/sesteva/probe-server.svg?branch=master)](https://travis-ci.com/sesteva/probe-server)
 
 <!-- TODO: add example of shutting down, add TOC, add tests, add more metrics based on those to oberserve, update example app -->
 
@@ -41,13 +41,13 @@ In addition, you could be running something a server which we don't the api. The
 ### Install
 
 ```
-$ npm i @ia/probe-server
+$ npm i @flia/probe-server
 ```
 
 or
 
 ```
-$ yarn add @ia/probe-server
+$ yarn add @flia/probe-server
 ```
 
 ### Requirements
@@ -67,7 +67,7 @@ The module expects PROBE_PORT to be an ENV variable. Otherwise it defaults to po
 You can see a full example in the "example" folder on this repo.
 
 ```js
-const probes = require("@ia/probe-server");
+const probes = require("@flia/probe-server");
 const Prometheus = require("prom-client");
 
 const metricsInterval = Prometheus.collectDefaultMetrics();

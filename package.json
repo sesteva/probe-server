@@ -1,6 +1,6 @@
 {
-	"name": "@ia/probe-server",
-	"version": "0.0.0",
+	"name": "@flia/probe-server",
+	"version": "0.0.1",
 	"description": "",
 	"license": "MIT",
 	"repository": "https://github.com/sesteva/probe-server",
@@ -17,8 +17,13 @@
 		"build": "tsc",
 		"dev": "PORT=3001 PROBE_PORT=9001 node example/server.js"
 	},
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
 	"files": [
-		"index.js"
+		"./dist/index.js",
+		"./dist/index.d.ts",
+		"README.md",
+		"license"
 	],
 	"keywords": [
 		"nodejs",
