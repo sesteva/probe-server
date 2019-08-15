@@ -80,11 +80,81 @@ const httpRequestDurationMicroseconds = new Prometheus.Histogram({
 
 const probeServer = probes(Prometheus);
 
+// Runs before each requests
+server.use((req, res, next) => {
+	res.locals.startEpoch = Date.now();
+	next();
+});
+
+server.get("/", (req, res) => {
+	return handleRequest(req, res, "/", req.query);
+});
+
+server.get("*", (req, res) => {
+	return handleRequest(req, res);
+});
+
+// Runs after each requests - **THIS NEVER GETS INVOKED**
+server.use((req, res, next) => {
+	const responseTimeInMs = Date.now() - res.locals.startEpoch;
+	httpRequestDurationMicroseconds
+		.labels(req.method, req.route.path, res.statusCode)
+		.observe(responseTimeInMs);
+
+	next();
+});
+
 server.listen(port, err => {
-	probeServer.signalReady();
+	probeServer.emitReady();
 	if (err) throw err;
 	console.info(`> Ready on http://localhost:${port}`);
 });
+```
+
+### Usage with NextJS
+
+[Background/Context](https://github.com/zeit/next.js/issues/7665)
+
+```
+const handle = app.getRequestHandler();
+const metricsInterval = Prometheus.collectDefaultMetrics();
+const httpRequestDurationMicroseconds = new Prometheus.Histogram({
+  name: "http_request_duration_ms",
+  help: "Duration of HTTP requests in ms",
+  labelNames: ["method", "route", "code"],
+  buckets: [0.1, 5, 15, 50, 100, 200, 300, 400, 500] // buckets for response time from 0.1ms to 500ms
+});
+
+const onFinish = (req, res) => {
+  res.on("finish", () => {
+    const responseTimeInMs = Date.now() - res.locals.startEpoch;
+    httpRequestDurationMicroseconds
+      .labels(req.method, req.route.path, res.statusCode)
+      .observe(responseTimeInMs);
+  });
+
+// Runs before each requests
+  server.use((req, res, next) => {
+    res.locals.startEpoch = Date.now();
+    next();
+  });
+
+  server.get("/_next/*", (req, res) => {
+    onFinish(req, res);
+    /* serving _next static content using next.js handler */
+    handle(req, res);
+  });
+
+  server.get("/", (req, res) => {
+    onFinish(req, res);
+    return handle(req, res, "/", req.query);
+  });
+
+  server.get("/dashboard", (req, res) => {
+    onFinish(req, res);
+    return handle(req, res, "/dashboard", req.query);
+  });
+};
 ```
 
 ## License
