@@ -1,6 +1,6 @@
 {
 	"name": "@flia/probe-server",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "",
 	"license": "MIT",
 	"repository": "https://github.com/sesteva/probe-server",
@@ -20,8 +20,8 @@
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"files": [
-		"./dist/index.js",
-		"./dist/index.d.ts",
+		"dist/index.js",
+		"dist/index.d.ts",
 		"README.md",
 		"license"
 	],
