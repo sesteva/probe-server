@@ -1,4 +1,4 @@
-# @flia/probe-metrics-server [![Build Status](https://travis-ci.com/sesteva/probe-server.svg?branch=master)](https://travis-ci.com/sesteva/probe-server)
+# @flia/probe-server [![Build Status](https://travis-ci.com/sesteva/probe-server.svg?branch=master)](https://travis-ci.com/sesteva/probe-server)
 
 <!-- TODO: add example of shutting down, add TOC, add tests, add more metrics based on those to oberserve, update example app -->
 
